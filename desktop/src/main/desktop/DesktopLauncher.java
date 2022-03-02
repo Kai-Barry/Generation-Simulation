@@ -1,12 +1,15 @@
-package com.mygdx.game.desktop;
+package main.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
+import main.GenerationGame;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MyGdxGame(), config);
+		config.title = "Generation Simulator";
+		config.foregroundFPS = 120;
+		config.backgroundFPS = 45;
+		new LwjglApplication(new GenerationGame(), config);
 	}
 }
