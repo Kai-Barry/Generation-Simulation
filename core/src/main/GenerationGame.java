@@ -4,9 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+
 import main.files.UserSettings;
 import main.screen.GameScreen;
 import main.screen.MainMenuScreen;
@@ -15,7 +15,7 @@ import org.graalvm.compiler.lir.LIRInstruction;
 
 
 public class GenerationGame extends Game {
-	private static final Logger logger = LoggerFactory.getLogger(GenerationGame.class);
+	private static final Logger logger = new Logger("Game Loading", 0);
 	
 	@Override
 	public void create () {

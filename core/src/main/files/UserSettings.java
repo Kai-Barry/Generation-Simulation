@@ -4,8 +4,7 @@ import javax.xml.stream.Location;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Graphics.DisplayMode;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import com.badlogic.gdx.utils.Logger;
 import main.GenerationGame;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 
 
 public class UserSettings {
-    private static final Logger logger = LoggerFactory.getLogger(UserSettings.class);
+    private static final Logger logger = new Logger("User Settings load");
 
     private static final int windowWidth = 1280;
     private static final int windowHeight = 720;
@@ -24,13 +23,13 @@ public class UserSettings {
 
     //Main settings
     private int fps = 60;
-    private boolean fullscreen = true;
+    private boolean fullscreen = false;
     private float uiScale = 1f;
 
     //display Settings
     private boolean vsync = true;
-    private int width = 1920;
-    private int height = 1080;
+    private int width = 1280;
+    private int height = 720;
 
     public UserSettings() {
         this.loadSettings();
