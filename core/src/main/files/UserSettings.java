@@ -36,6 +36,23 @@ public class UserSettings {
     }
 
     /**
+     * Gets the width
+     * @return
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Gets the Height
+     * @return
+     */
+    public int getHeight() {
+        return height;
+    }
+
+
+    /**
      * Sets the fps
      *
      * @param fps
