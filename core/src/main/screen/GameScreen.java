@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -27,20 +28,21 @@ public class GameScreen extends ScreenAdapter {
     private static Box2DDebugRenderer debugRenderer;
     private static World world;
     private static SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHandler tileMapHandler;
 
-    public GameScreen(GenerationGame game, OrthographicCamera camera) {
+    public GameScreen(GenerationGame game, OrthographicCamera camera, ShapeRenderer shapeRenderer) {
         logger.debug("Initialising main game screen services");
         this.game = game;
         this.camera = camera;
         this.debugRenderer = new Box2DDebugRenderer();
         this.world = new World(new Vector2(0,0), false);
         this.batch = new SpriteBatch();
-
-        this.tileMapHandler = new TileMapHandler();
+        this.tileMapHandler = new TileMapHandler(this);
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
+        this.shapeRenderer = shapeRenderer;
     }
     private void update() {
         world.step(1/60f,6,2);
@@ -63,10 +65,15 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         this.update();
-        Gdx.gl.glClearColor(0,250,0,1);
+        Gdx.gl.glClearColor(.25f,.25f,.25f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(0, 1, 0, 1);
+        shapeRenderer.rect(100,100,100,100);
+        shapeRenderer.end();
 
         batch.begin();
         //renders objects

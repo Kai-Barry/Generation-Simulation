@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -18,19 +19,19 @@ import org.graalvm.compiler.lir.LIRInstruction;
 public class GenerationGame extends Game {
 	private static final Logger logger = new Logger("Game Loading", 0);
 	private OrthographicCamera camera;
+	private ShapeRenderer shapeRenderer;
 	
 	@Override
 	public void create () {
 		logger.debug("Game is Created");
 		UserSettings settings = new UserSettings();
 		this.loadSettings(settings);
-		System.out.println(settings.getWidth());
-		System.out.println(settings.getHeight());
+		this.shapeRenderer = new ShapeRenderer();
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, settings.getWidth(), settings.getHeight());
 		Gdx.gl.glClearColor(126 / 255f, 255 / 255f, 138 / 255f, 1);
 
-		setScreen(ScreenType.MAIN_MENU);
+		this.setScreen(ScreenType.GAME_SCREEN);
 	}
 
 	private void loadSettings(UserSettings settings) {
@@ -52,7 +53,7 @@ public class GenerationGame extends Game {
 				setScreen(new SettingsScreen(this));
 				break;
 			case GAME_SCREEN:
-				setScreen(new GameScreen(this,this.camera));
+				setScreen(new GameScreen(this, this.camera, this.shapeRenderer));
 				break;
 			default:
 				setScreen(new MainMenuScreen(this));
