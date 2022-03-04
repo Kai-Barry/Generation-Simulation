@@ -12,11 +12,15 @@ public class GrowerAlgorithm extends BaseTile {
     private TileType newTileType;
     private TileType oppositeTileType;
     private Team team;
-    public GrowerAlgorithm(TileType tileType, GridIndex gridIndex) {
+    private float takeEmpty;
+    private float takeEnemy;
+    public GrowerAlgorithm(TileType tileType, GridIndex gridIndex, float takeEmpty, float takeEnemy) {
         super(tileType, gridIndex);
         this.newTileType = findNewTileType();
         this.oppositeTileType = findOppositeTileType();
         this.team = findTeam();
+        this.takeEmpty = takeEmpty;
+        this.takeEnemy = takeEnemy;
     }
 
     private Team findTeam() {
@@ -67,25 +71,36 @@ public class GrowerAlgorithm extends BaseTile {
                     TileType surroundTileType =  gridIndex.TileAtXY(surroundX, surroundY);
                     if (surroundTileType != this.newTileType
                             && surroundTileType != WALL
-                            && surroundTileType != CLASH) {
+                            && surroundTileType != CLASH
+                            && surroundTileType != EMPTY) {
                         if (surroundTileType == this.oppositeTileType) {
-                            gridIndex.addObject(surroundX, surroundY, CLASH);
+                            if (Math.random() < this.takeEmpty) {
+                                gridIndex.addObject(surroundX, surroundY, CLASH);
+                            }
                         } else {
                             if (this.team == YELLOW) {
                                 if (surroundTileType != YELLOW_ADVANCED
                                         && surroundTileType != YELLOW_BASIC
                                         && surroundTileType != YELLOW_GROWER
                                         && surroundTileType != YELLOW_GROWER_NEW ) {
-                                    gridIndex.addObject(surroundX, surroundY, this.tileType);
+                                    if (Math.random() < this.takeEnemy) {
+                                        gridIndex.addObject(surroundX, surroundY, this.newTileType);
+                                    }
                                 }
                             } else if (this.team == RED) {
                                 if (surroundTileType != RED_ADVANCED
                                         && surroundTileType != RED_BASIC
                                         && surroundTileType != RED_GROWER
                                         && surroundTileType != RED_GROWER_NEW ) {
-                                    gridIndex.addObject(surroundX, surroundY, this.tileType);
+                                    if (Math.random() < this.takeEnemy) {
+                                        gridIndex.addObject(surroundX, surroundY, this.newTileType);
+                                    }
                                 }
                             }
+                        }
+                    } else if (surroundTileType == EMPTY) {
+                        if (Math.random() < this.takeEmpty) {
+                            gridIndex.addObject(surroundX, surroundY, this.newTileType);
                         }
                     }
                 }

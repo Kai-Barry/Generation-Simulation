@@ -7,10 +7,10 @@ public class RectangleRender {
     protected ShapeRenderer rectangle;
     protected int x;
     protected int y;
-    protected int size;
+    protected float size;
     protected TileType tile;
 
-    public RectangleRender(ShapeRenderer rectangle, int x, int y, int size, TileType tileType) {
+    public RectangleRender(ShapeRenderer rectangle, int x, int y, float size, TileType tileType) {
         this.rectangle = rectangle;
         this.x = x;
         this.y = y;

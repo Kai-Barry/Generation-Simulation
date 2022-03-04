@@ -56,7 +56,8 @@ public class GameScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
         this.gridIndex = new GridIndex(20,10);
         this.gridIndex.setupIndex();
-        this.gridIndex.addObject(0,0,TileType.YELLOW_GROWER);
+        this.gridIndex.addObject(19,5,TileType.YELLOW_GROWER);
+        this.gridIndex.addObject(0,5,TileType.RED_GROWER);
         this.shapeRenderer = createShapeRenders();
     }
 
@@ -74,6 +75,7 @@ public class GameScreen extends ScreenAdapter {
         cameraUpdate();
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
+//        gridIndex.tick();
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -97,6 +99,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
+
         this.makeGrid(30);
 
         batch.begin();
@@ -104,6 +107,11 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
         debugRenderer.render(world, camera.combined.scl(PPM));
+    }
+
+    public float findEdgeToEdgeSize() {
+        float x = this.gridIndex.getGridX();
+        return (1280 / x) - x;
     }
 
 
@@ -115,7 +123,7 @@ public class GameScreen extends ScreenAdapter {
             for (int x = 0; x < width; x++) {
                 TileType tile = gridIndex.TileAtXY(x, y);
                 ShapeRenderer rectangle = shapeRenderer.get(x + y * width);
-                RectangleRender rectangleRender = new RectangleRender(rectangle, x, y, size, tile);
+                RectangleRender rectangleRender = new RectangleRender(rectangle, x, y, this.findEdgeToEdgeSize(), tile);
                 rectangleRender.createRectangle();
             }
         }

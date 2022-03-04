@@ -13,12 +13,14 @@ public class GridIndex {
     private List<List<TileType>> objectIndexClone;
 
     //Controllers
-    private GrowerAlgorithm YellowGrowerAlgorithm;
+    private GrowerAlgorithm yellowGrowerAlgorithm;
+    private GrowerAlgorithm redGrowerAlgorithm;
 
     public GridIndex(int x, int y) {
         this.gridX = x;
         this.gridY = y;
-        this.YellowGrowerAlgorithm = new GrowerAlgorithm(TileType.YELLOW_GROWER, this);
+        this.yellowGrowerAlgorithm = new GrowerAlgorithm(TileType.YELLOW_GROWER, this, 0.1f,0.1f);
+        this.redGrowerAlgorithm = new GrowerAlgorithm(TileType.RED_GROWER, this, 0.1f,0.1f);
     }
 
     public int getGridX() {
@@ -49,7 +51,7 @@ public class GridIndex {
     }
 
     public Integer GetIndexOf(int x, int y) {
-        if (x > gridX || x < 0 || y > gridY || y < 0) {
+        if (x >=gridX || x < 0 || y >=gridY || y < 0) {
             return -1;
         }
         return x + (y * this.gridX);
@@ -69,8 +71,8 @@ public class GridIndex {
         }
         int x = index;
         int y = 0;
-        while (x > (gridX - 1)) {
-            x = x - gridX;
+        while (x >= gridX) {
+            x -= gridX;
             y++;
         }
         coordinates[0] = x;
@@ -111,7 +113,27 @@ public class GridIndex {
         return typeAll;
     }
 
+    public void convertNewTiles() {
+        int y = 0;
+        for (List<TileType> list : this.objectIndex) {
+            int x = 0;
+            for (TileType tile : list) {
+                if (tile == TileType.RED_GROWER_NEW) {
+                    this.addObject(x, y, TileType.RED_GROWER);
+                } else if (tile == TileType.YELLOW_GROWER_NEW) {
+                    this.addObject(x, y, TileType.YELLOW_GROWER);
+                } else if (tile == TileType.CLASH) {
+                    this.addObject(x, y, TileType.EMPTY);
+                }
+                x++;
+            }
+            y++;
+        }
+    }
+
     public void tick() {
-        YellowGrowerAlgorithm.tick();
+        yellowGrowerAlgorithm.tick();
+        redGrowerAlgorithm.tick();
+        this.convertNewTiles();
     }
 }
