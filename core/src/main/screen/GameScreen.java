@@ -15,21 +15,33 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Logger;
 import main.GenerationGame;
+import main.mechanics.GridIndex;
+import main.render.RectangleRender;
 import main.utility.TileMapHandler;
+import main.utility.TileType;
 
 import javax.swing.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static main.utility.Constants.PPM;
 
 public class GameScreen extends ScreenAdapter {
     private static final Logger logger = new Logger("Game Screen");
     private final GenerationGame game;
+
+    //Rendering
     private OrthographicCamera camera;
     private static Box2DDebugRenderer debugRenderer;
     private static World world;
     private static SpriteBatch batch;
-    private ShapeRenderer shapeRenderer;
+    private List<ShapeRenderer> shapeRenderer;
 
+    //Game Logic
+    private GridIndex gridIndex;
+
+    //Rendering 2
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHandler tileMapHandler;
 
@@ -42,8 +54,21 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.tileMapHandler = new TileMapHandler(this);
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
-        this.shapeRenderer = shapeRenderer;
+        this.gridIndex = new GridIndex(20,10);
+        this.gridIndex.setupIndex();
+        this.gridIndex.addObject(0,0,TileType.YELLOW_GROWER);
+        this.shapeRenderer = createShapeRenders();
     }
+
+    private List<ShapeRenderer> createShapeRenders() {
+        int numShapeRenderer = this.gridIndex.getGridX() * this.gridIndex.getGridY();
+        List<ShapeRenderer> shapeRenderers= new ArrayList<>();
+        for (int i = 0; i < numShapeRenderer; i++) {
+            shapeRenderers.add(new ShapeRenderer());
+        }
+        return shapeRenderers;
+    }
+
     private void update() {
         world.step(1/60f,6,2);
         cameraUpdate();
@@ -53,7 +78,10 @@ public class GameScreen extends ScreenAdapter {
             Gdx.app.exit();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                gridIndex.tick();
 
+            }
         }
     }
 
@@ -69,11 +97,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(0, 1, 0, 1);
-        shapeRenderer.rect(100,100,100,100);
-        shapeRenderer.end();
+        this.makeGrid(30);
 
         batch.begin();
         //renders objects
@@ -82,14 +106,17 @@ public class GameScreen extends ScreenAdapter {
         debugRenderer.render(world, camera.combined.scl(PPM));
     }
 
-    public void makeGrid(int x, int y, int size) {
-        if (x > 0 && y > 0) {
-            for (int width = 0; x < width; width++) {
-                for (int height = 0; y < height; height++) {
-                    float xLoc = width * size;
-                    float yLoc = height * size;
 
-                }
+
+    public void makeGrid(int size) {
+        int width = gridIndex.getGridX();
+        int height = gridIndex.getGridY();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                TileType tile = gridIndex.TileAtXY(x, y);
+                ShapeRenderer rectangle = shapeRenderer.get(x + y * width);
+                RectangleRender rectangleRender = new RectangleRender(rectangle, x, y, size, tile);
+                rectangleRender.createRectangle();
             }
         }
     }

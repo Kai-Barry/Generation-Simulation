@@ -30,15 +30,15 @@ public abstract class BaseTile {
         List<Integer> surroundingIndex = new ArrayList<>();
         int index = gridIndex.GetIndexOf(x, y);
         if (index != -1) {
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x - 1, y - 1));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x, y - 1));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x + 1, y - 1));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x - 1, y));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x, y));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x + 1, y));
-            surroundingIndex.set(0, gridIndex.GetIndexOf(x - 1, y + 1));
-            surroundingIndex.set(0,gridIndex.GetIndexOf(x, y + 1));
-            surroundingIndex.set(0,gridIndex.GetIndexOf(x + 1, y + 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x - 1, y - 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x, y - 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x + 1, y - 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x - 1, y));
+            surroundingIndex.add(gridIndex.GetIndexOf(x, y));
+            surroundingIndex.add(gridIndex.GetIndexOf(x + 1, y));
+            surroundingIndex.add(gridIndex.GetIndexOf(x - 1, y + 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x, y + 1));
+            surroundingIndex.add(gridIndex.GetIndexOf(x + 1, y + 1));
         } else {
             return null;
         }
@@ -99,4 +99,6 @@ public abstract class BaseTile {
         }
         return surroundingIndex;
     }
+
+    abstract void tick();
 }
