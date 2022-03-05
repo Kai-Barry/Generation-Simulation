@@ -32,11 +32,8 @@ public class RectangleRender {
             case YELLOW_GROWER:
                 rectangle.setColor(0.976f, 1f, 0.58f, 1);
                 break;
-            case YELLOW_GROWER_NEW:
-                rectangle.setColor(1, 0.9f, 0.4f, 1);
-                break;
             case YELLOW_BASIC:
-                rectangle.setColor(1, 0.9f, 0.3f, 1);
+                rectangle.setColor(0, 0f, 0.6f, 1);
                 break;
             case YELLOW_ADVANCED:
                 rectangle.setColor(1, 0.9f, 0.2f, 1);
@@ -45,10 +42,7 @@ public class RectangleRender {
                 rectangle.setColor(1, 0.1f, 0, 1);
                 break;
             case RED_GROWER:
-                rectangle.setColor(1, 0.2f, 0, 1);
-                break;
-            case RED_GROWER_NEW:
-                rectangle.setColor(1, 0.13f, 0, 1);
+                rectangle.setColor(1f, 1f, 1f, 0);
                 break;
             case RED_ADVANCED:
                 rectangle.setColor(1, 0.1f, 0.11f, 1);

@@ -57,7 +57,9 @@ public class GameScreen extends ScreenAdapter {
         this.gridIndex = new GridIndex(20,10);
         this.gridIndex.setupIndex();
         this.gridIndex.addObject(19,5,TileType.YELLOW_GROWER);
+        this.gridIndex.addObject(17,5,TileType.YELLOW_BASIC);
         this.gridIndex.addObject(0,5,TileType.RED_GROWER);
+        this.gridIndex.addObject(2,5,TileType.RED_BASIC);
         this.shapeRenderer = createShapeRenders();
     }
 
@@ -79,6 +81,9 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            gridIndex.tick();
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
                 gridIndex.tick();
@@ -98,7 +103,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(.25f,.25f,.25f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        orthogonalTiledMapRenderer.render();
+        //orthogonalTiledMapRenderer.render();
 
         this.makeGrid(30);
 

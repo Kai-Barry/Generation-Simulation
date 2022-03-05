@@ -9,53 +9,16 @@ import static main.utility.TileType.*;
 import static main.utility.Team.*;
 
 public class GrowerAlgorithm extends BaseTile {
-    private TileType newTileType;
-    private TileType oppositeTileType;
-    private Team team;
-    private float takeEmpty;
-    private float takeEnemy;
+    private final TileType newTileType;
+    private final Team team;
+    private final float takeEmpty;
+    private final float takeEnemy;
     public GrowerAlgorithm(TileType tileType, GridIndex gridIndex, float takeEmpty, float takeEnemy) {
         super(tileType, gridIndex);
         this.newTileType = findNewTileType();
-        this.oppositeTileType = findOppositeTileType();
         this.team = findTeam();
         this.takeEmpty = takeEmpty;
         this.takeEnemy = takeEnemy;
-    }
-
-    private Team findTeam() {
-        if (tileType == YELLOW_GROWER
-                || tileType == YELLOW_ADVANCED
-                || tileType == YELLOW_BASIC
-                || tileType == YELLOW_GROWER_NEW) {
-            return YELLOW;
-        } else if (tileType == RED_GROWER
-                || tileType == RED_ADVANCED
-                || tileType == RED_BASIC
-                || tileType == RED_GROWER_NEW) {
-            return RED;
-        }
-        return YELLOW;
-    }
-
-    private TileType findNewTileType() {
-        switch (this.tileType) {
-            case YELLOW_GROWER:
-                return YELLOW_GROWER_NEW;
-            case RED_GROWER:
-                return RED_GROWER_NEW;
-        }
-        return CLASH;
-    }
-
-    private TileType findOppositeTileType() {
-        switch (this.tileType) {
-            case YELLOW_GROWER:
-                return RED_GROWER_NEW;
-            case RED_GROWER:
-                return YELLOW_GROWER_NEW;
-        }
-        return CLASH;
     }
 
     @Override
@@ -63,7 +26,7 @@ public class GrowerAlgorithm extends BaseTile {
         List<Integer> indexList = gridIndex.FindAllOfType(tileType);
         for (int index : indexList) {
             int XY[] = gridIndex.GetXYOf(index);
-            List<Integer> surrounding = super.SurroundIndex(XY[0], XY[1]);
+            List<Integer> surrounding = super.surroundIndex(XY[0], XY[1]);
             for (int surroundIndex : surrounding) {
                 int surroundX = gridIndex.GetXYOf(surroundIndex)[0];
                 int surroundY = gridIndex.GetXYOf(surroundIndex)[1];
@@ -73,28 +36,14 @@ public class GrowerAlgorithm extends BaseTile {
                             && surroundTileType != WALL
                             && surroundTileType != CLASH
                             && surroundTileType != EMPTY) {
-                        if (surroundTileType == this.oppositeTileType) {
+                        if (isOppositeNewTile(this.team, surroundTileType)) {
                             if (Math.random() < this.takeEmpty) {
                                 gridIndex.addObject(surroundX, surroundY, CLASH);
                             }
                         } else {
-                            if (this.team == YELLOW) {
-                                if (surroundTileType != YELLOW_ADVANCED
-                                        && surroundTileType != YELLOW_BASIC
-                                        && surroundTileType != YELLOW_GROWER
-                                        && surroundTileType != YELLOW_GROWER_NEW ) {
-                                    if (Math.random() < this.takeEnemy) {
-                                        gridIndex.addObject(surroundX, surroundY, this.newTileType);
-                                    }
-                                }
-                            } else if (this.team == RED) {
-                                if (surroundTileType != RED_ADVANCED
-                                        && surroundTileType != RED_BASIC
-                                        && surroundTileType != RED_GROWER
-                                        && surroundTileType != RED_GROWER_NEW ) {
-                                    if (Math.random() < this.takeEnemy) {
-                                        gridIndex.addObject(surroundX, surroundY, this.newTileType);
-                                    }
+                            if (!isTileTeamExBasic(this.team, surroundTileType)) {
+                                if (Math.random() < this.takeEnemy) {
+                                    gridIndex.addObject(surroundX, surroundY, this.newTileType);
                                 }
                             }
                         }
