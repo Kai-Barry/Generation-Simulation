@@ -65,12 +65,6 @@ public class GameScreen extends ScreenAdapter {
         this.gapSize = 1;
         this.gridIndex = new GridIndex(20,14);
         this.gridIndex.setupIndex();
-        this.gridIndex.addObject(19,5,TileType.YELLOW_GROWER);
-        this.gridIndex.addObject(17,5,TileType.YELLOW_BASIC);
-        this.gridIndex.addObject(0,4,TileType.RED_GROWER);
-        this.gridIndex.addObject(2,4,TileType.RED_BASIC);
-        this.gridIndex.addObject(8,4,TileType.YELLOW_FUSE);
-        this.gridIndex.addObject(10,7, TileType.GASOLINE);
         this.shapeRenderer = createShapeRenders();
         this.colourSelecter = new ShapeRenderer();
         this.selectedTileType = TileType.YELLOW_GROWER;
@@ -96,7 +90,6 @@ public class GameScreen extends ScreenAdapter {
             float locY = Gdx.graphics.getHeight() - Gdx.input.getY();
             int x = (int)Math.floor(locX / (this.size + this.gapSize));
             int y = (int)Math.floor(locY / (this.size + this.gapSize));
-            System.out.println(String.format("x: %f  y: %f", locX,locY));
             if (x >= 0 && x < this.gridIndex.getGridX() && y >= 0 && y < this.gridIndex.getGridY()) {
                 this.gridIndex.addObject(x, y, this.selectedTileType);
             } else {
@@ -134,8 +127,10 @@ public class GameScreen extends ScreenAdapter {
         }
         if (i == 8) {
             i = 0;
+        } else {
+            i++;
         }
-        this.selectedTileType = cycleTypes[i + 1];
+        this.selectedTileType = cycleTypes[i];
     }
 
     private void cameraUpdate() {
@@ -194,7 +189,7 @@ public class GameScreen extends ScreenAdapter {
         }
         return "Should not reach here";
     }
-    
+
     private void makeGrid(int size) {
         int width = gridIndex.getGridX();
         int height = gridIndex.getGridY();
