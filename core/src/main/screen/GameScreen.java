@@ -61,9 +61,9 @@ public class GameScreen extends ScreenAdapter {
         this.font = new BitmapFont(Gdx.files.internal("fonts/Dubai.fnt"));
         this.tileMapHandler = new TileMapHandler(this);
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
-        this.size = 30;
+        this.size = 10;
         this.gapSize = 1;
-        this.gridIndex = new GridIndex(20,14);
+        this.gridIndex = new GridIndex(60,54);
         this.gridIndex.setupIndex();
         this.shapeRenderer = createShapeRenders();
         this.colourSelecter = new ShapeRenderer();
