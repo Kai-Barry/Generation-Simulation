@@ -19,5 +19,7 @@ public enum TileType {
     RED_ADVANCED,
     RED_ADVANCED_SNAKE,
     RED_FUSE,
-    RED_FUSE_SNAKE
+    RED_FUSE_SNAKE,
+    GASOLINE,
+    GASOLINE_NEW
 }

@@ -3,22 +3,21 @@ package main.render;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import main.utility.TileType;
 
-public class RectangleRender {
+public class SelectorRender{
     protected ShapeRenderer rectangle;
-    protected int x;
-    protected int y;
+    protected float x;
+    protected float y;
     protected float size;
     protected TileType tile;
-    protected float gapSize;
 
-    public RectangleRender(ShapeRenderer rectangle, int x, int y, float size, TileType tileType, float gapSize) {
+    public SelectorRender(ShapeRenderer rectangle, float x, float y, float size, TileType tileType) {
         this.rectangle = rectangle;
         this.x = x;
         this.y = y;
         this.size = size;
         this.tile = tileType;
-        this.gapSize = gapSize;
     }
+
     public void createRectangle() {
         rectangle.begin(ShapeRenderer.ShapeType.Filled);
         switch (this.tile) {
@@ -74,7 +73,7 @@ public class RectangleRender {
                 rectangle.setColor(1, 1, 0.25f, 1);
                 break;
         }
-        rectangle.rect((x * size) + x, (y * size) + y ,  size,size);
+        rectangle.rect(x, y, size, size);
         rectangle.end();
     }
 }

@@ -47,7 +47,8 @@ public class GrowerAlgorithm extends BaseTile {
                             && surroundTileType != WALL
                             && surroundTileType != CLASH
                             && surroundTileType != EMPTY
-                            && surroundTileType != this.teamsFuseTile) {
+                            && surroundTileType != this.teamsFuseTile
+                            && surroundTileType != GASOLINE) {
                         if (isOppositeNewTile(this.team, surroundTileType)) {
                             if (Math.random() < this.takeEmpty) {
                                 gridIndex.addObject(surroundX, surroundY, CLASH);
@@ -63,7 +64,7 @@ public class GrowerAlgorithm extends BaseTile {
                         if (Math.random() < this.takeEmpty) {
                             gridIndex.addObject(surroundX, surroundY, this.newTileType);
                         }
-                    } else if (surroundTileType == this.teamsFuseTile) {
+                    } else if (surroundTileType == this.teamsFuseTile || surroundTileType == GASOLINE) {
                         if (Math.random() < this.takeFuse) {
                             gridIndex.addObject(surroundX, surroundY, this.newTileType);
                         }

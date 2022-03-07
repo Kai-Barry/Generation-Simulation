@@ -20,6 +20,7 @@ public class GridIndex {
     private AdvancedAlgorithm redAdvancedAlgorithm;
     private AdvancedAlgorithm yellowFuseAlgorithm;
     private AdvancedAlgorithm redFuseAlgorithm;
+    private GasolineAlgorithm gasolineAlgorithm;
 
     public GridIndex(int x, int y) {
         this.gridX = x;
@@ -32,6 +33,7 @@ public class GridIndex {
         this.redAdvancedAlgorithm = new AdvancedAlgorithm(TileType.RED_ADVANCED, this, 5);
         this.yellowFuseAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_FUSE, this, 5);
         this.redFuseAlgorithm = new AdvancedAlgorithm(TileType.RED_FUSE,this,5);
+        this.gasolineAlgorithm = new GasolineAlgorithm(TileType.GASOLINE,this,3,10);
     }
 
     public int getGridX() {
@@ -139,6 +141,8 @@ public class GridIndex {
                     this.addObject(x, y, TileType.RED_BASIC);
                 } else if (tile == TileType.CLASH) {
                     this.addObject(x, y, TileType.EMPTY);
+                } else if (tile == TileType.GASOLINE_NEW) {
+                    this.addObject(x, y, TileType.GASOLINE);
                 }
                 x++;
             }
@@ -175,6 +179,7 @@ public class GridIndex {
             this.yellowFuseAlgorithm.tick();
             this.redFuseAlgorithm.tick();
         }
+        gasolineAlgorithm.tick();
 
         this.convertNewTiles();
     }

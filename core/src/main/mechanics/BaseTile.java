@@ -100,7 +100,8 @@ public abstract class BaseTile {
         if (team == YELLOW) {
             if (tile == YELLOW_GROWER
                     || tile == YELLOW_ADVANCED
-                    || tile == YELLOW_BASIC) {
+                    || tile == YELLOW_BASIC
+                    || tile == YELLOW_ADVANCED_SNAKE) {
                 return true;
 
             } else {
@@ -109,7 +110,8 @@ public abstract class BaseTile {
         } else if (team == RED) {
             if (tile == RED_GROWER
                     || tile == RED_ADVANCED
-                    || tile == RED_BASIC) {
+                    || tile == RED_BASIC
+                    || tile == RED_ADVANCED_SNAKE) {
                 return true;
             }
             else {
@@ -122,12 +124,14 @@ public abstract class BaseTile {
     protected Team findTeam() {
         if (tileType == YELLOW_GROWER
                 || tileType == YELLOW_ADVANCED
+                || tileType == YELLOW_FUSE
                 || tileType == YELLOW_BASIC
                 || tileType == YELLOW_BASIC_NEW
                 || tileType == YELLOW_GROWER_NEW) {
             return YELLOW;
         } else if (tileType == RED_GROWER
                 || tileType == RED_ADVANCED
+                || tileType == RED_FUSE
                 || tileType == RED_BASIC
                 || tileType == RED_BASIC_NEW
                 || tileType == RED_GROWER_NEW) {
@@ -148,6 +152,8 @@ public abstract class BaseTile {
                 return RED_BASIC_NEW;
             case YELLOW_ADVANCED:
                 return null;
+            case GASOLINE:
+                return GASOLINE_NEW;
         }
         return CLASH;
     }
