@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,8 +18,6 @@ import main.mechanics.GridIndex;
 import main.render.RectangleRender;
 import main.utility.TileMapHandler;
 import main.utility.TileType;
-
-import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +51,13 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.tileMapHandler = new TileMapHandler(this);
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
-        this.gridIndex = new GridIndex(20,10);
+        this.gridIndex = new GridIndex(20,14);
         this.gridIndex.setupIndex();
         this.gridIndex.addObject(19,5,TileType.YELLOW_GROWER);
         this.gridIndex.addObject(17,5,TileType.YELLOW_BASIC);
-        this.gridIndex.addObject(0,5,TileType.RED_GROWER);
-        this.gridIndex.addObject(2,5,TileType.RED_BASIC);
+        this.gridIndex.addObject(0,4,TileType.RED_GROWER);
+        this.gridIndex.addObject(2,4,TileType.RED_BASIC);
+        this.gridIndex.addObject(8,4,TileType.YELLOW_FUSE);
         this.shapeRenderer = createShapeRenders();
     }
 
@@ -87,7 +85,6 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
                 gridIndex.tick();
-
             }
         }
     }
@@ -126,7 +123,7 @@ public class GameScreen extends ScreenAdapter {
         int height = gridIndex.getGridY();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                TileType tile = gridIndex.TileAtXY(x, y);
+                TileType tile = gridIndex.tileAtXY(x, y);
                 ShapeRenderer rectangle = shapeRenderer.get(x + y * width);
                 RectangleRender rectangleRender = new RectangleRender(rectangle, x, y, this.findEdgeToEdgeSize(), tile);
                 rectangleRender.createRectangle();

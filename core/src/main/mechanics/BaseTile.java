@@ -3,14 +3,12 @@ package main.mechanics;
 import main.utility.Team;
 import main.utility.TileType;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import static main.utility.Team.RED;
 import static main.utility.Team.YELLOW;
 import static main.utility.TileType.*;
-import static main.utility.TileType.RED_GROWER_NEW;
 
 public abstract class BaseTile {
     protected TileType tileType;
@@ -60,7 +58,7 @@ public abstract class BaseTile {
         if (index != -1) {
             for (int XY = 0; XY < surroundingXY.length; XY++) {
                 if (gridIndex.GetIndexOf(surroundingXY[XY][0], surroundingXY[XY][1]) != -1) {
-                    TileType tile = gridIndex.TileAtXY(surroundingXY[XY][0], surroundingXY[XY][1]);
+                    TileType tile = gridIndex.tileAtXY(surroundingXY[XY][0], surroundingXY[XY][1]);
                     if (isTileTeam(team, tile)) {
                         surroundingTeam.add(true);
                     }
@@ -148,6 +146,8 @@ public abstract class BaseTile {
                 return YELLOW_BASIC_NEW;
             case RED_BASIC:
                 return RED_BASIC_NEW;
+            case YELLOW_ADVANCED:
+                return null;
         }
         return CLASH;
     }

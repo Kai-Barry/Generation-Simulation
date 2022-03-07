@@ -38,14 +38,32 @@ public class RectangleRender {
             case YELLOW_ADVANCED:
                 rectangle.setColor(1, 0.9f, 0.2f, 1);
                 break;
+            case YELLOW_ADVANCED_SNAKE:
+                rectangle.setColor(1, 0.4f, 0.2f, 1);
+                break;
+            case YELLOW_FUSE:
+                rectangle.setColor(1, 0.4f, 0.4f, 1);
+                break;
+            case YELLOW_FUSE_SNAKE:
+                rectangle.setColor(0.5f, 0.5f, 0.5f, 1);
+                break;
             case RED_BASIC:
                 rectangle.setColor(1, 0.1f, 0, 1);
                 break;
             case RED_GROWER:
-                rectangle.setColor(1f, 1f, 1f, 0);
+                rectangle.setColor(1f, 0.1f, 0.4f, 0);
                 break;
             case RED_ADVANCED:
                 rectangle.setColor(1, 0.1f, 0.11f, 1);
+                break;
+            case RED_ADVANCED_SNAKE:
+                rectangle.setColor(1, 0.1f, 0.31f, 1);
+                break;
+            case RED_FUSE:
+                rectangle.setColor(1, 0.1f, 0.51f, 1);
+                break;
+            case RED_FUSE_SNAKE:
+                rectangle.setColor(0.1f, 0.1f, 0.1f, 1);
                 break;
             default:
                 rectangle.setColor(1, 1, 0.25f, 1);

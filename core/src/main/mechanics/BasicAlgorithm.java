@@ -1,16 +1,12 @@
 package main.mechanics;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import main.utility.Team;
 import main.utility.TileType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static main.utility.Team.RED;
-import static main.utility.Team.YELLOW;
 import static main.utility.TileType.*;
 
 public class BasicAlgorithm extends BaseTile {
@@ -26,9 +22,9 @@ public class BasicAlgorithm extends BaseTile {
 
     @Override
     public void tick() {
-        List<Integer> indexList = gridIndex.FindAllOfType(tileType);
+        List<Integer> indexList = gridIndex.findAllOfType(tileType);
         for (int index : indexList) {
-            int XY[] = gridIndex.GetXYOf(index);
+            int XY[] = gridIndex.getXYOf(index);
             List<Integer> surroundingIndex = super.surroundIndex(XY[0], XY[1]);
             List<Boolean> surroundingTeam = super.surroundIsTeam(XY[0], XY[1], team);
             /*for (int i = 0; i < surroundingTeam.size(); i++) {
@@ -41,21 +37,22 @@ public class BasicAlgorithm extends BaseTile {
                 int counter = 0;
                 List<Integer> diagonals= new ArrayList<Integer>(Arrays.asList(0,2,6,8));
                 for (int surroundIndex : surroundingIndex) {
-                    int surroundX = gridIndex.GetXYOf(surroundIndex)[0];
-                    int surroundY = gridIndex.GetXYOf(surroundIndex)[1];
+                    int surroundX = gridIndex.getXYOf(surroundIndex)[0];
+                    int surroundY = gridIndex.getXYOf(surroundIndex)[1];
+                    int random = (int)(Math.random() * 4);
                     if (surroundX >= 0 && surroundY >= 0) {
-                        TileType surroundTile = gridIndex.TileAtXY(surroundX ,surroundY);
+                        TileType surroundTile = gridIndex.tileAtXY(surroundX ,surroundY);
                         if (counter == 0 && surroundingTeam.get(1)) {
                             if (!isOppositeNewTile(this.team, surroundTile)) {
-                                if (gridIndex.FindAllOfType(this.tileType).size() < maxTile) {
+                                if (gridIndex.findAllOfType(this.tileType).size() < maxTile) {
                                     gridIndex.addObject(surroundX, surroundY, this.newTileType);
                                 }
-                            } else {
+                            } else if (isOppositeNewTile(this.team, surroundTile)) {
                                 gridIndex.addObject(surroundX, surroundY, CLASH);
                             }
                         } else if (counter == 2 && surroundingTeam.get(3)) {
                             if (!isOppositeNewTile(this.team, surroundTile)) {
-                                if (gridIndex.FindAllOfType(this.tileType).size() < maxTile) {
+                                if (gridIndex.findAllOfType(this.tileType).size() < maxTile) {
                                     gridIndex.addObject(surroundX, surroundY, this.newTileType);
                                 }
                             } else {
@@ -63,7 +60,7 @@ public class BasicAlgorithm extends BaseTile {
                             }
                         } else if (counter == 6 && surroundingTeam.get(5)) {
                             if (!isOppositeNewTile(this.team, surroundTile)) {
-                                if (gridIndex.FindAllOfType(this.tileType).size() < maxTile) {
+                                if (gridIndex.findAllOfType(this.tileType).size() < maxTile) {
                                     gridIndex.addObject(surroundX, surroundY, this.newTileType);
                                 }
                             } else {
@@ -71,7 +68,7 @@ public class BasicAlgorithm extends BaseTile {
                             }
                         } else if (counter == 8 && surroundingTeam.get(7)) {
                             if (!isOppositeNewTile(this.team, surroundTile)) {
-                                if (gridIndex.FindAllOfType(this.tileType).size() < maxTile) {
+                                if (gridIndex.findAllOfType(this.tileType).size() < maxTile) {
                                     gridIndex.addObject(surroundX, surroundY, this.newTileType);
                                 }
                             } else {

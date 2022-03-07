@@ -1,6 +1,5 @@
 package main.mechanics;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import main.utility.TileType;
 
 import java.util.ArrayList;
@@ -16,15 +15,23 @@ public class GridIndex {
     private GrowerAlgorithm yellowGrowerAlgorithm;
     private GrowerAlgorithm redGrowerAlgorithm;
     private BasicAlgorithm yellowBasicAlgorithm;
-    private BasicAlgorithm RedBasicAlgorithm;
+    private BasicAlgorithm redBasicAlgorithm;
+    private AdvancedAlgorithm yellowAdvancedAlgorithm;
+    private AdvancedAlgorithm redAdvancedAlgorithm;
+    private AdvancedAlgorithm yellowFuseAlgorithm;
+    private AdvancedAlgorithm redFuseAlgorithm;
 
     public GridIndex(int x, int y) {
         this.gridX = x;
         this.gridY = y;
-        this.yellowGrowerAlgorithm = new GrowerAlgorithm(TileType.YELLOW_GROWER, this, 0.01f,0.01f);
-        this.redGrowerAlgorithm = new GrowerAlgorithm(TileType.RED_GROWER, this, 0.01f,0.01f);
+        this.yellowGrowerAlgorithm = new GrowerAlgorithm(TileType.YELLOW_GROWER, this, 0.01f,0.01f, 0.7f);
+        this.redGrowerAlgorithm = new GrowerAlgorithm(TileType.RED_GROWER, this, 0.01f,0.01f, 0.7f);
         this.yellowBasicAlgorithm = new BasicAlgorithm(TileType.YELLOW_BASIC, this, 10);
-        this.RedBasicAlgorithm = new BasicAlgorithm(TileType.RED_BASIC, this, 10);
+        this.redBasicAlgorithm = new BasicAlgorithm(TileType.RED_BASIC, this, 10);
+        this.yellowAdvancedAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_ADVANCED, this, 5);
+        this.redAdvancedAlgorithm = new AdvancedAlgorithm(TileType.RED_ADVANCED, this, 5);
+        this.yellowFuseAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_FUSE, this, 5);
+        this.redFuseAlgorithm = new AdvancedAlgorithm(TileType.RED_FUSE,this,5);
     }
 
     public int getGridX() {
@@ -66,7 +73,7 @@ public class GridIndex {
      * @param index
      * @return
      */
-    public int[] GetXYOf(int index) {
+    public int[] getXYOf(int index) {
         int coordinates[]= new int[2];
         if (index > gridY*gridX || index < 0) {
             coordinates[0] = -1;
@@ -95,7 +102,7 @@ public class GridIndex {
         this.objectIndex.get(y).set(x,tileType);
     }
 
-    public TileType TileAtXY(int x, int y) {
+    public TileType tileAtXY(int x, int y) {
         return this.objectIndex.get(y).get(x);
     }
 
@@ -103,7 +110,7 @@ public class GridIndex {
         return this.objectIndexClone.get(y).get(x);
     }
 
-    public List<Integer> FindAllOfType(TileType tileType) {
+    public List<Integer> findAllOfType(TileType tileType) {
         List<Integer> typeAll = new ArrayList<>();
         int index = 0;
         for (List<TileType> list : this.objectIndex) {
@@ -141,11 +148,11 @@ public class GridIndex {
 
     public void tick() {
         if (Math.random() > 0.5) {
-            RedBasicAlgorithm.tick();
+            redBasicAlgorithm.tick();
             yellowBasicAlgorithm.tick();
         } else {
             yellowBasicAlgorithm.tick();
-            RedBasicAlgorithm.tick();
+            redBasicAlgorithm.tick();
         }
         if (Math.random() > 0.5) {
             yellowGrowerAlgorithm.tick();
@@ -154,6 +161,21 @@ public class GridIndex {
             redGrowerAlgorithm.tick();
             yellowGrowerAlgorithm.tick();
         }
+        if (Math.random() > 0.5) {
+            this.redAdvancedAlgorithm.tick();
+            this.yellowAdvancedAlgorithm.tick();
+        } else {
+            this.yellowAdvancedAlgorithm.tick();
+            this.redAdvancedAlgorithm.tick();
+        }
+        if (Math.random() > 0.5) {
+            this.redFuseAlgorithm.tick();
+            this.yellowFuseAlgorithm.tick();
+        } else {
+            this.yellowFuseAlgorithm.tick();
+            this.redFuseAlgorithm.tick();
+        }
+
         this.convertNewTiles();
     }
 }
