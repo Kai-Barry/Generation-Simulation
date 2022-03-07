@@ -33,7 +33,7 @@ public class GridIndex {
         this.redAdvancedAlgorithm = new AdvancedAlgorithm(TileType.RED_ADVANCED, this, 5);
         this.yellowFuseAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_FUSE, this, 5);
         this.redFuseAlgorithm = new AdvancedAlgorithm(TileType.RED_FUSE,this,5);
-        this.gasolineAlgorithm = new GasolineAlgorithm(TileType.GASOLINE,this,3,10);
+        this.gasolineAlgorithm = new GasolineAlgorithm(TileType.GASOLINE,this,3,100);
     }
 
     public int getGridX() {
