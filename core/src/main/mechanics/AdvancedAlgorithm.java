@@ -78,13 +78,21 @@ public class AdvancedAlgorithm extends BaseTile {
                 }
                 if (!snakePlaced) {
                     List<Integer> overrideHorizontals = new ArrayList<Integer>(Arrays.asList(1, 3, 5, 7));
+                    int counter = 0;
                     while (overrideHorizontals.size() > 0) {
                         int directionOverride = overrideHorizontals.get((int) (Math.random() * overrideHorizontals.size()));
                         overrideHorizontals.remove(overrideHorizontals.indexOf(directionOverride));
                         int surroundXOverride = gridIndex.getXYOf(surrounding.get(direction))[0];
                         int surroundYOverride = gridIndex.getXYOf(surrounding.get(direction))[1];
                         if (surroundXOverride >= 0 && surroundYOverride >= 0) {
-                            gridIndex.addObject(surroundX, surroundY, this.tileType);
+                            TileType surroundTile = gridIndex.tileAtXY(surroundXOverride, surroundYOverride);
+                            if (surroundTile != WALL) {
+                                gridIndex.addObject(surroundX, surroundY, this.tileType);
+                                gridIndex.addObject(XY[0], XY[1], this.snakeTile);
+                                break;
+                            }
+                        }
+                        if(counter >= 16) {
                             gridIndex.addObject(XY[0], XY[1], this.snakeTile);
                             break;
                         }

@@ -30,9 +30,9 @@ public class GridIndex {
         this.yellowBasicAlgorithm = new BasicAlgorithm(TileType.YELLOW_BASIC, this, 10);
         this.redBasicAlgorithm = new BasicAlgorithm(TileType.RED_BASIC, this, 10);
         this.yellowAdvancedAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_ADVANCED, this, 1);
-        this.redAdvancedAlgorithm = new AdvancedAlgorithm(TileType.RED_ADVANCED, this, 5);
-        this.yellowFuseAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_FUSE, this, 5);
-        this.redFuseAlgorithm = new AdvancedAlgorithm(TileType.RED_FUSE,this,5);
+        this.redAdvancedAlgorithm = new AdvancedAlgorithm(TileType.RED_ADVANCED, this, 1);
+        this.yellowFuseAlgorithm = new AdvancedAlgorithm(TileType.YELLOW_FUSE, this, 1);
+        this.redFuseAlgorithm = new AdvancedAlgorithm(TileType.RED_FUSE,this,1);
         this.gasolineAlgorithm = new GasolineAlgorithm(TileType.GASOLINE,this,3,100);
     }
 

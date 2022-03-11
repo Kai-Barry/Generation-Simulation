@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
         this.orthogonalTiledMapRenderer = tileMapHandler.setupMap();
         this.size = 10;
         this.gapSize = 1;
-        this.gridIndex = new GridIndex(60,54);
+        this.gridIndex = new GridIndex(80,50);
         this.gridIndex.setupIndex();
         this.shapeRenderer = createShapeRenders();
         this.colourSelecter = new ShapeRenderer();
@@ -120,12 +120,12 @@ public class GameScreen extends ScreenAdapter {
         }
     }
     private void cycleSelectedTile() {
-        TileType cycleTypes[] = {YELLOW_GROWER, YELLOW_BASIC, YELLOW_ADVANCED, YELLOW_FUSE, RED_GROWER, RED_BASIC, RED_ADVANCED, RED_FUSE, GASOLINE};
+        TileType cycleTypes[] = {YELLOW_GROWER, YELLOW_BASIC, YELLOW_ADVANCED, YELLOW_FUSE, RED_GROWER, RED_BASIC, RED_ADVANCED, RED_FUSE, GASOLINE, WALL};
         int i = 0;
         while (this.selectedTileType != cycleTypes[i]){
             i++;
         }
-        if (i == 8) {
+        if (i == cycleTypes.length - 1) {
             i = 0;
         } else {
             i++;
@@ -156,15 +156,15 @@ public class GameScreen extends ScreenAdapter {
     private void selectorRenderBox() {
         float x = (Gdx.graphics.getWidth() / 5) * 4;
         float y = (Gdx.graphics.getHeight() / 5) * 4;
-//        System.out.println(String.format("x: %d  y: %d",x,y));
         SelectorRender rectangle = new SelectorRender(colourSelecter, x, y, 100, selectedTileType);
         rectangle.createRectangle();
     }
 
     private void selectorRenderFont() {
-        int x = (Gdx.graphics.getWidth() / 4) * 3;
-        int y = (Gdx.graphics.getHeight() / 4) * 3;
-        font.draw(batch, TileToName(selectedTileType), 30, 20);
+        String tileName = TileToName(selectedTileType);
+        int x = (0 - (Gdx.graphics.getWidth() / 2)) + ((Gdx.graphics.getWidth() / 5) * 4) + 10 - (tileName.length() * 3);
+        int y = (0 - (Gdx.graphics.getHeight() / 2)) + ((Gdx.graphics.getHeight() / 5) * 4) -20;
+        font.draw(batch, tileName, x, y);
     }
 
     private String TileToName(TileType tile) {
@@ -186,6 +186,8 @@ public class GameScreen extends ScreenAdapter {
             return "Red Team Snake Fuse";
         } else if (tile == GASOLINE) {
             return "Gasoline";
+        } else if (tile == WALL) {
+            return "Wall";
         }
         return "Should not reach here";
     }
