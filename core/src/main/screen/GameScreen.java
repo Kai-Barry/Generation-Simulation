@@ -85,17 +85,26 @@ public class GameScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            float locX = Gdx.input.getX();
+            float locY = Gdx.graphics.getHeight() - Gdx.input.getY();
+            int x = (int) Math.floor(locX / (this.size + this.gapSize));
+            int y = (int) Math.floor(locY / (this.size + this.gapSize));
+            if (x >= 0 && x < this.gridIndex.getGridX() && y >= 0 && y < this.gridIndex.getGridY()) {
+                this.gridIndex.addObject(x, y, this.selectedTileType);
+            }
+        }
+        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
             float locX = Gdx.input.getX();
             float locY = Gdx.graphics.getHeight() - Gdx.input.getY();
             int x = (int)Math.floor(locX / (this.size + this.gapSize));
             int y = (int)Math.floor(locY / (this.size + this.gapSize));
             if (x >= 0 && x < this.gridIndex.getGridX() && y >= 0 && y < this.gridIndex.getGridY()) {
-                this.gridIndex.addObject(x, y, this.selectedTileType);
-            } else {
-//                System.out.println("out");
+                this.gridIndex.addObject(x, y, EMPTY);
             }
         }
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
